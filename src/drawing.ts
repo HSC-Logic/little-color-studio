@@ -1,0 +1,3 @@
+import type {Point,Stroke} from './types';
+export const toPagePoint=(clientX:number,clientY:number,rect:Pick<DOMRect,'left'|'top'|'width'|'height'>,zoom=1):Point=>({x:(clientX-rect.left)*600/rect.width/zoom,y:(clientY-rect.top)*800/rect.height/zoom});
+export const drawStrokes=(ctx:CanvasRenderingContext2D,strokes:Stroke[],scale=1)=>{ctx.save();ctx.scale(scale,scale);ctx.lineCap='round';ctx.lineJoin='round';for(const s of strokes){ctx.globalCompositeOperation=s.erase?'destination-out':'source-over';ctx.strokeStyle=s.color;ctx.lineWidth=s.size;ctx.beginPath();s.points.forEach((p,i)=>i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y));ctx.stroke()}ctx.restore();ctx.globalCompositeOperation='source-over'};

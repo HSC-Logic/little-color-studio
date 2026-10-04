@@ -1,0 +1,11 @@
+import type {Artwork} from './types';
+const DB='little-color-studio',STORE='artworks';
+const open=()=>new Promise<IDBDatabase>((resolve,reject)=>{const r=indexedDB.open(DB,1);r.onupgradeneeded=()=>r.result.createObjectStore(STORE,{keyPath:'id'});r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error)});
+const request=<T>(mode:IDBTransactionMode,run:(s:IDBObjectStore)=>IDBRequest<T>)=>open().then(db=>new Promise<T>((resolve,reject)=>{const tx=db.transaction(STORE,mode);const r=run(tx.objectStore(STORE));r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error);tx.oncomplete=()=>db.close()}));
+export const saveArtwork=(a:Artwork)=>request('readwrite',s=>s.put(a));
+export const getArtwork=(id:string)=>request<Artwork|undefined>('readonly',s=>s.get(id));
+export const listArtworks=()=>request<Artwork[]>('readonly',s=>s.getAll());
+export const deleteArtwork=(id:string)=>request('readwrite',s=>s.delete(id));
+export const validateBackup=(value:unknown):Artwork[]=>{if(!value||typeof value!=='object'||(value as any).version!==1||!Array.isArray((value as any).artworks))throw new Error('This is not a Little Color Studio backup.');return (value as any).artworks.filter((a:any)=>a&&typeof a.id==='string'&&typeof a.templateId==='string'&&a.templateVersion===1&&a.regions&&Array.isArray(a.strokes))};
+export const exportBackup=async()=>({version:1,exportedAt:new Date().toISOString(),artworks:await listArtworks()});
+export const importBackup=async(value:unknown)=>{const items=validateBackup(value);await Promise.all(items.map(saveArtwork));return items.length};

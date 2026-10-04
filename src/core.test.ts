@@ -1,0 +1,4 @@
+import{describe,expect,it}from'vitest';import{History}from'./history';import{toPagePoint}from'./drawing';import{validateBackup}from'./storage';
+describe('history',()=>{it('undoes, redoes, and clears redo branches',()=>{const h=new History({regions:{},strokes:[]});h.push({regions:{a:'red'},strokes:[]});expect(h.undo().regions).toEqual({});expect(h.redo().regions).toEqual({a:'red'});h.undo();h.push({regions:{a:'blue'},strokes:[]});expect(h.canRedo).toBe(false)})});
+describe('coordinates',()=>{it('maps display pixels into page coordinates',()=>expect(toPagePoint(310,420,{left:10,top:20,width:600,height:800})).toEqual({x:300,y:400}))});
+describe('backup',()=>{it('validates supported records',()=>expect(validateBackup({version:1,artworks:[{id:'1',templateId:'x',templateVersion:1,regions:{},strokes:[]}]})).toHaveLength(1));it('rejects unknown files',()=>expect(()=>validateBackup({version:2})).toThrow())});

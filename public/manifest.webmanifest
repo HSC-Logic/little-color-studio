@@ -1,0 +1,1 @@
+{"name":"Little Color Studio","short_name":"Color Studio","description":"A friendly offline coloring book for children.","start_url":"./","scope":"./","display":"standalone","background_color":"#fffaf2","theme_color":"#ff7657","icons":[{"src":"icons/icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]}
