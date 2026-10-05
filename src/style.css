@@ -4,6 +4,7 @@
 @media(max-width:380px){main{padding:12px}.grid{grid-template-columns:1fr}.tools{grid-template-columns:1fr 1fr}.hero{border-radius:22px}.hero h1{font-size:2.7rem}}
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}.card:hover,button:hover,a:hover{transform:none}}
 @media print{body>*{display:none!important}}
+.pagination{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:28px}.pagination span{font-weight:800;text-align:center}#templates{scroll-margin-top:180px}
 .book-count{display:flex;align-items:center;gap:8px;font-weight:800}.book-count select{min-height:48px;padding:8px 12px;border:2px solid #d9d5cc;border-radius:14px;background:white;color:var(--ink);font:inherit}.book-count select:focus-visible{outline:4px solid #2079c8;outline-offset:3px}.book-hint{flex-basis:100%;font-size:.8rem;color:#555d6c}
 .site-footer{padding:24px 16px max(24px,env(safe-area-inset-bottom));border-top:2px solid #ece4d8;text-align:center;color:#555d6c;font-size:.9rem}.site-footer strong{color:var(--ink)}
 .template{display:block;min-width:0}.template>div{width:100%;overflow-wrap:anywhere}.grid>*{min-width:0}header nav{display:flex;align-items:center;gap:12px}.install-help{padding:8px 12px;border:2px solid #d9d5cc;border-radius:14px}
